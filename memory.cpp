@@ -34,17 +34,21 @@ bool Memory::TryGetModule(const char* moduleName, Memory::ModuleInfo* info) {
 	}
 	return false;
 }
+
 const char* Memory::GetModulePath(const char* moduleName) {
 	auto info = Memory::ModuleInfo();
 	return (Memory::TryGetModule(moduleName, &info)) ? std::string(info.path).c_str() : nullptr;
 };
+
 void* Memory::GetModuleHandleByName(const char* moduleName) {
 	auto info = Memory::ModuleInfo();
 	return (Memory::TryGetModule(moduleName, &info)) ? dlopen(info.path, RTLD_NOLOAD | RTLD_NOW) : nullptr;
 }
+
 void Memory::CloseModuleHandle(void* moduleHandle) {
 	dlclose(moduleHandle);
 }
+
 std::string Memory::GetProcessName() {
 	char link[32];
 	char temp[MAX_PATH] = { 0 };
@@ -55,6 +59,7 @@ std::string Memory::GetProcessName() {
 	proc = proc.substr(index + 1, proc.length() - index);
 	return proc;
 }
+
 uintptr_t Memory::FindAddress(const uintptr_t start, const uintptr_t end, const char* target) {
 	const char* pattern = target;
 	uintptr_t result = 0;
@@ -73,6 +78,7 @@ uintptr_t Memory::FindAddress(const uintptr_t start, const uintptr_t end, const 
 	}
 	return 0;
 }
+
 uintptr_t Memory::Scan(const char* moduleName, const char* pattern, int offset) {
 	uintptr_t result = 0;
 	auto info = Memory::ModuleInfo();
@@ -84,6 +90,7 @@ uintptr_t Memory::Scan(const char* moduleName, const char* pattern, int offset) 
 	}
 	return result;
 }
+
 std::vector<uintptr_t> Memory::MultiScan(const char* moduleName, const char* pattern, int offset) {
 	std::vector<uintptr_t> result;
 	auto length = std::strlen(pattern);
@@ -102,6 +109,7 @@ std::vector<uintptr_t> Memory::MultiScan(const char* moduleName, const char* pat
 	}
 	return result;
 }
+
 std::vector<uintptr_t> Memory::Scan(const char* moduleName, const Memory::Pattern* pattern) {
 	std::vector<uintptr_t> result;
 	auto info = Memory::ModuleInfo();
@@ -117,6 +125,7 @@ std::vector<uintptr_t> Memory::Scan(const char* moduleName, const Memory::Patter
 	}
 	return result;
 }
+
 std::vector<std::vector<uintptr_t>> Memory::MultiScan(const char* moduleName, const Memory::Patterns* patterns) {
 	auto results = std::vector<std::vector<uintptr_t>>();
 	auto info = Memory::ModuleInfo();

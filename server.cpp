@@ -25,7 +25,7 @@ const char* Server::GetPlayerName(int index) {
 	if(entity != nullptr) {
 		return (const char*)((uintptr_t)entity + Offsets::m_szNetname);
 	} else {
-		return "";
+		return ""; // jank alert!
 	}
 }
 
