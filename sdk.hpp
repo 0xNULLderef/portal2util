@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SDK_HPP
+#define SDK_HPP
 
 #include <cstring>
 #include <cstdint>
@@ -39,6 +40,40 @@ struct InterfaceReg {
 		m_CreateFn = fn;
 		m_pNext = s_pInterfaceRegs;
 		s_pInterfaceRegs = this;
+	}
+};
+
+template <class T, class I = int> struct CUtlMemory {
+	T* m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+};
+
+template <class T, class A = CUtlMemory<T>> struct CUtlVector {
+	A m_Memory;
+	int m_Size;
+	T* m_pElements;
+
+	void Append(const T& val) {
+		if(this->m_Size == this->m_Memory.m_nAllocationCount) {
+			int grow = this->m_Memory.m_nGrowSize;
+			if(grow == 0)
+				grow = 1;
+			this->m_Memory.m_nAllocationCount += grow;
+			this->m_Memory.m_pMemory = static_cast<T*>(realloc(this->m_Memory.m_pMemory, sizeof(T) * this->m_Memory.m_nAllocationCount));
+			this->m_pElements = this->m_Memory.m_pMemory;
+		}
+		this->m_Memory.m_pMemory[this->m_Size] = val;
+		this->m_Size++;
+	}
+
+	void Clear() {
+		if(this->m_Memory.m_pMemory) {
+			free(this->m_Memory.m_pMemory);
+			this->m_Memory.m_pMemory = 0;
+		}
+		this->m_Size = 0;
+		this->m_Memory.m_nAllocationCount = 0;
 	}
 };
 
@@ -605,7 +640,7 @@ struct ScriptVariant_t {
 	}
 
 	bool AssignTo(char **pDest) {
-		*pDest = "";
+		*pDest = (char*)"";
 		return false;
 	}
 
@@ -637,40 +672,6 @@ struct ScriptVariant_t {
 
 	int16				m_type;
 	int16				m_flags;
-};
-
-template <class T, class I = int> struct CUtlMemory {
-	T* m_pMemory;
-	int m_nAllocationCount;
-	int m_nGrowSize;
-};
-
-template <class T, class A = CUtlMemory<T>> struct CUtlVector {
-	A m_Memory;
-	int m_Size;
-	T* m_pElements;
-
-	void Append(const T& val) {
-		if(this->m_Size == this->m_Memory.m_nAllocationCount) {
-			int grow = this->m_Memory.m_nGrowSize;
-			if(grow == 0)
-				grow = 1;
-			this->m_Memory.m_nAllocationCount += grow;
-			this->m_Memory.m_pMemory = static_cast<T*>(realloc(this->m_Memory.m_pMemory, sizeof(T) * this->m_Memory.m_nAllocationCount));
-			this->m_pElements = this->m_Memory.m_pMemory;
-		}
-		this->m_Memory.m_pMemory[this->m_Size] = val;
-		this->m_Size++;
-	}
-
-	void Clear() {
-		if(this->m_Memory.m_pMemory) {
-			free(this->m_Memory.m_pMemory);
-			this->m_Memory.m_pMemory = 0;
-		}
-		this->m_Size = 0;
-		this->m_Memory.m_nAllocationCount = 0;
-	}
 };
 
 struct ScriptFuncDescriptor_t {
@@ -1100,3 +1101,5 @@ DEFINE_SCRIPT_BINDINGS(1);
 }
 
 #define ScriptRegisterFunction(pVM, func, description) ScriptRegisterFunctionNamed(pVM, func, #func, description)
+
+#endif // SDK_HPP
