@@ -12,7 +12,7 @@ REDECL(VScript::CreateVM);
 DETOUR_T(IScriptVM*, VScript::CreateVM, ScriptLanguage_t language) {
 	IScriptVM* g_pScriptVM = VScript::CreateVM(thisptr, language);
 	vscript->g_pScriptVM = g_pScriptVM;
-	ScriptRegisterFunction(g_pScriptVM, getPlayerName, "Gets player username by index (starting at 0)");
+	ScriptRegisterFunction(g_pScriptVM, getPlayerName, "Gets player username by index");
 	return g_pScriptVM;
 }
 

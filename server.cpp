@@ -21,7 +21,7 @@ void Server::Shutdown() {
 }
 
 const char* Server::GetPlayerName(int index) {
-	void* entity = server->UTIL_PlayerByIndex(index + 1); // WHY DOES THE INDEX START AT 1?! VOLVO PLEASE FIX!
+	void* entity = server->UTIL_PlayerByIndex(index); // indexes start at 1
 	if(entity != nullptr) {
 		return (const char*)((uintptr_t)entity + Offsets::m_szNetname);
 	} else {
