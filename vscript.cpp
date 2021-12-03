@@ -19,7 +19,7 @@ DETOUR_T(IScriptVM*, VScript::CreateVM, ScriptLanguage_t language) {
 VScript::VScript() {}
 
 bool VScript::Init() {
-	this->scriptmanager = Interface::Create(vscript->Name(), "VScriptManager009");
+	this->scriptmanager = Interface::Create(this->Name(), "VScriptManager009");
 	if(this->scriptmanager) {
 		this->scriptmanager->Hook(VScript::CreateVM_Hook, VScript::CreateVM, Offsets::CreateVM);
 		return true;

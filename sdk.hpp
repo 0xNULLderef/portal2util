@@ -1102,4 +1102,28 @@ DEFINE_SCRIPT_BINDINGS(1);
 
 #define ScriptRegisterFunction(pVM, func, description) ScriptRegisterFunctionNamed(pVM, func, #func, description)
 
+// -- Matchmaking --
+
+class IMatchTitleGameSettingsMgr {
+public:
+	virtual void ExtendServerDetails() = 0;
+	virtual void ExtendLobbyDetailsTemplate() = 0;
+	virtual void ExtendGameSettingsForLobbyTransition() = 0;
+	virtual void ExtendDatacenterReport() = 0;
+	virtual void RollupGameDetails() = 0;
+	virtual void DefineSessionSearchKeys() = 0;
+	virtual void DefineDedicatedSearchKeys() = 0;
+	virtual void InitializeGameSettings() = 0;
+	virtual void SetBspnameFromMapgroup() = 0;
+	virtual void ExtendGameSettingsUpdateKeys() = 0;
+	virtual void ExtendTeamLobbyToGame() = 0;
+	virtual void PrepareForSessionCreate() = 0;
+	virtual void ExecuteCommand() = 0;
+	virtual void PrepareLobbyForGame() = 0;
+	virtual void PrepareTeamLinkForGame() = 0;
+	virtual void PrepareClientLobbyForMigration() = 0;
+	virtual void PrepareClientLobbyForGameDisconnect() = 0;
+	virtual bool AllowClientProfileUpdate(void* kvUpdate) = 0;
+};
+
 #endif // SDK_HPP

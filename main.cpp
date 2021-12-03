@@ -8,6 +8,7 @@
 #include <tier1.hpp>
 #include <server.hpp>
 #include <engine.hpp>
+#include <matchmaking.hpp>
 #include <vscript.hpp>
 #include <command.hpp>
 
@@ -35,13 +36,16 @@ bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServ
 	engine = new Engine();
 	if(!engine->Init()) return false;
 
+	matchmaking = new Matchmaking();
+	if(!matchmaking->Init()) return false;
+
 	vscript = new VScript();
 	if(!vscript->Init()) return false;
 
 	Command::RegisterAll();
 
 	console->Print("loaded successfully!\n");
-
+	
 	return true;
 }
 
@@ -49,6 +53,7 @@ void Plugin::Unload() {
 	console->Print("Gracefully returning the game to it's original state.\n");
 	console->Shutdown();
 	vscript->Shutdown();
+	matchmaking->Shutdown();
 	engine->Shutdown();
 	server->Shutdown();
 	Command::UnregisterAll();

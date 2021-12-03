@@ -1,2 +1,4 @@
 build
 .vscode
+.ccls-cache
+.cache
