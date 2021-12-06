@@ -48,7 +48,7 @@ void Command::Register() {
 
 void Command::Unregister() {
 	if(this->isRegistered) {
-		tier1->UnrgeisterConCommand(tier1->g_pCVar->ThisPtr(), this->ptr);
+		tier1->UnregisterConCommand(tier1->g_pCVar->ThisPtr(), this->ptr);
 	}
 	this->isRegistered = false;
 }

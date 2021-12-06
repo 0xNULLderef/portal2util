@@ -136,6 +136,12 @@ public:
 	virtual void Log(const LoggingContext *ctx, const char *msg) = 0;
 };
 
+#define FCVAR_DEVELOPMENTONLY (1 << 1)
+#define FCVAR_HIDDEN (1 << 4)
+#define FCVAR_NEVER_AS_STRING (1 << 12)
+#define FCVAR_CHEAT (1 << 14)
+#define FCVAR_DONTRECORD (1 << 17)
+
 // -- Tier1 command stuff --
 
 struct ConCommandBase;

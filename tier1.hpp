@@ -12,7 +12,7 @@ public:
 	Interface* g_pCVar = nullptr;
 
 	_RegisterConCommand RegisterConCommand = nullptr;
-	_UnregisterConCommand UnrgeisterConCommand = nullptr;
+	_UnregisterConCommand UnregisterConCommand = nullptr;
 	_FindCommandBase FindCommandBase = nullptr;
 	_InstallGlobalChangeCallback InstallGlobalChangeCallback = nullptr;
 	_RemoveGlobalChangeCallback RemoveGlobalChangeCallback = nullptr;

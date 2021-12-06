@@ -4,6 +4,7 @@
 #include <portal2.hpp>
 
 // --- FEATURE INCLUDES ---
+#include <variable.hpp>
 #include <console.hpp>
 #include <tier1.hpp>
 #include <server.hpp>
@@ -20,6 +21,14 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(Plugin, IServerPluginCallbacks, INTERFACEVERSI
 Plugin::Plugin() {
 	Portal2* portal2 = new Portal2();
 	(void)portal2; // Janky ass hack so i don't need to set -Wno-unused-variable
+}
+
+CON_COMMAND(uncheat_cvar, "Forces cvar value") {
+	if(args[1] && *args[1]) {
+		Variable var(args[1]);
+		var.Unlock();
+		var.RemoveFlag(FCVAR_CHEAT);
+	}
 }
 
 bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory) {
