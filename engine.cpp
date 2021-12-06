@@ -16,6 +16,7 @@ bool Engine::Init() {
 		// console->Print("%x\n", sv);
 		auto isv = Interface::Create(sv, false);
 		auto temp = isv->Original<void*>(0);
+		(void)temp;
 		// DumpHex(temp, 0x40);
 		Interface::Delete(g_VEngineClient);
 	}

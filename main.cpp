@@ -8,6 +8,7 @@
 #include <tier1.hpp>
 #include <server.hpp>
 #include <engine.hpp>
+#include <sdl.hpp>
 #include <matchmaking.hpp>
 #include <vscript.hpp>
 #include <command.hpp>
@@ -36,6 +37,9 @@ bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServ
 	engine = new Engine();
 	if(!engine->Init()) return false;
 
+	sdl = new SDL();
+	if(!sdl->Init()) return false;
+
 	matchmaking = new Matchmaking();
 	if(!matchmaking->Init()) return false;
 
@@ -54,6 +58,7 @@ void Plugin::Unload() {
 	console->Shutdown();
 	vscript->Shutdown();
 	matchmaking->Shutdown();
+	sdl->Shutdown();
 	engine->Shutdown();
 	server->Shutdown();
 	Command::UnregisterAll();

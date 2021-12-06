@@ -27,6 +27,13 @@
 #define DETOUR_T(type, name, ...) \
 	type __cdecl name##_Hook(void* thisptr, ##__VA_ARGS__)
 
+// NV - non virtual, as in doesn't take a thisptr
+// the _Original is needed since i have to include SDL
+#define DETOUR_NV(type, name, ...) \
+	using _##name = type(__cdecl*)(__VA_ARGS__); \
+	static _##name name##_Original; \
+	static type __cdecl name##_Hook(__VA_ARGS__)
+
 #define SAFE_DELETE(ptr) \
 	if(ptr) { \
 		delete ptr; \
