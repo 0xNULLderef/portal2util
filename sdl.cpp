@@ -6,7 +6,10 @@
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
 
+#include <assert.h>
+
 DETOUR_NV(void, SDL_GL_SwapWindow, SDL_Window* window) {
+	// assert(false && "Hit SDL_GL_SwapWindow!!!");
 	if(!sdl->m_bInitDone) {
 		ImGui::CreateContext();
 		ImGui_ImplOpenGL3_Init();

@@ -1,6 +1,7 @@
 #include <tier1.hpp>
 
 #include <offsets.hpp>
+#include <console.hpp>
 
 bool Tier1::Init() {
 	this->g_pCVar = Interface::Create(this->Name(), "VEngineCvar007", false);
@@ -8,6 +9,8 @@ bool Tier1::Init() {
 		this->RegisterConCommand = this->g_pCVar->Original<_RegisterConCommand>(Offsets::RegisterConCommand);
 		this->UnregisterConCommand = this->g_pCVar->Original<_UnregisterConCommand>(Offsets::UnregisterConCommand);
 		this->FindCommandBase = this->g_pCVar->Original<_FindCommandBase>(Offsets::FindCommandBase);
+		console->Print("%x\n", (unsigned int)this->FindCommandBase);
+		// console->Print("%x\n", (unsigned int)this->FindCommandBase(this->g_pCVar->ThisPtr(), "plugin_load"));
 
 		this->m_pConCommandList = reinterpret_cast<ConCommandBase*>((uintptr_t)this->g_pCVar->ThisPtr() + Offsets::m_pConCommandList);
 

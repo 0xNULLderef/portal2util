@@ -8,7 +8,7 @@ class SDL {
 public:
 	void* m_pSDL = nullptr;
 	bool m_bInitDone = false;
-	bool m_bIsOpen = true;
+	bool m_bIsOpen = false;
 
 public:
 	SDL();
