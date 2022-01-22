@@ -14,7 +14,6 @@
 #include <vscript.hpp>
 #include <command.hpp>
 
-
 Plugin plugin;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR(Plugin, IServerPluginCallbacks, INTERFACEVERSION_ISERVERPLUGINCALLBACKS, plugin);
 
@@ -29,6 +28,9 @@ CON_COMMAND(uncheat_cvar, "Forces cvar value") {
 		var.Unlock();
 		var.RemoveFlag(FCVAR_CHEAT);
 	}
+}
+
+CON_COMMAND(pain, "aaaaaaaaaaaaaaaaa") {
 }
 
 bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory) {
@@ -46,8 +48,8 @@ bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServ
 	engine = new Engine();
 	if(!engine->Init()) return false;
 
-	sdl = new SDL();
-	if(!sdl->Init()) return false;
+	// sdl = new SDL();
+	// if(!sdl->Init()) return false;
 
 	matchmaking = new Matchmaking();
 	if(!matchmaking->Init()) return false;
@@ -58,7 +60,7 @@ bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServ
 	Command::RegisterAll();
 
 	console->Print("loaded successfully!\n");
-	
+
 	return true;
 }
 
@@ -67,7 +69,7 @@ void Plugin::Unload() {
 	console->Shutdown();
 	vscript->Shutdown();
 	matchmaking->Shutdown();
-	sdl->Shutdown();
+	// sdl->Shutdown();
 	engine->Shutdown();
 	server->Shutdown();
 	Command::UnregisterAll();

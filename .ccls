@@ -1,0 +1,2 @@
+clang++
+%hpp %cpp -I.

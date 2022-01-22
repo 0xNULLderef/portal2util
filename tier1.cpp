@@ -9,8 +9,6 @@ bool Tier1::Init() {
 		this->RegisterConCommand = this->g_pCVar->Original<_RegisterConCommand>(Offsets::RegisterConCommand);
 		this->UnregisterConCommand = this->g_pCVar->Original<_UnregisterConCommand>(Offsets::UnregisterConCommand);
 		this->FindCommandBase = this->g_pCVar->Original<_FindCommandBase>(Offsets::FindCommandBase);
-		console->Print("%x\n", (unsigned int)this->FindCommandBase);
-		// console->Print("%x\n", (unsigned int)this->FindCommandBase(this->g_pCVar->ThisPtr(), "plugin_load"));
 
 		this->m_pConCommandList = reinterpret_cast<ConCommandBase*>((uintptr_t)this->g_pCVar->ThisPtr() + Offsets::m_pConCommandList);
 
@@ -33,6 +31,9 @@ bool Tier1::Init() {
 			this->Dtor = Memory::VMT<_Dtor>(vtable, Offsets::Dtor);
 			this->Create = Memory::VMT<_Create>(vtable, Offsets::Create);
 		}
+
+		// console->DumpHex((void*)this->Dtor, 0x40);
+		// console->DumpHex((void*)this->Create, 0x40);
 
 		this->InstallGlobalChangeCallback = this->g_pCVar->Original<_InstallGlobalChangeCallback>(Offsets::InstallGlobalChangeCallback);
 		this->RemoveGlobalChangeCallback = this->g_pCVar->Original<_RemoveGlobalChangeCallback>(Offsets::RemoveGlobalChangeCallback);

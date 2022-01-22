@@ -9,7 +9,7 @@
 #include <assert.h>
 
 DETOUR_NV(void, SDL_GL_SwapWindow, SDL_Window* window) {
-	// assert(false && "Hit SDL_GL_SwapWindow!!!");
+	assert(false && "Hit SDL_GL_SwapWindow!!!");
 	if(!sdl->m_bInitDone) {
 		ImGui::CreateContext();
 		ImGui_ImplOpenGL3_Init();
@@ -50,14 +50,14 @@ DETOUR_NV(int, SDL_PollEvent, SDL_Event* event) {
 
 template <typename T = uintptr_t, typename U = void*> void SDL_Hook(void* pBase, T detour, U& original) {
 	uintptr_t uiBase = reinterpret_cast<uintptr_t>(pBase);
-	uintptr_t* uiRealAddress = reinterpret_cast<uintptr_t*>(uiBase + 5 + *reinterpret_cast<uintptr_t*>(uiBase + 6) + *reinterpret_cast<uintptr_t*>(uiBase + 12));
+	uintptr_t* uiRealAddress = reinterpret_cast<uintptr_t*>(uiBase + 9 + *reinterpret_cast<uintptr_t*>(uiBase + 10) + *reinterpret_cast<uintptr_t*>(uiBase + 16));
 	original = *reinterpret_cast<U*>(uiRealAddress);
 	*uiRealAddress = reinterpret_cast<uintptr_t>(detour);
 }
 
 template <typename T = void*> void SDL_Unhook(void* pBase, T& detour) {
 	uintptr_t uiBase = reinterpret_cast<uintptr_t>(pBase);
-	uintptr_t* uiRealAddress = reinterpret_cast<uintptr_t*>(uiBase + 5 + *reinterpret_cast<uintptr_t*>(uiBase + 6) + *reinterpret_cast<uintptr_t*>(uiBase + 12));
+	uintptr_t* uiRealAddress = reinterpret_cast<uintptr_t*>(uiBase + 9 + *reinterpret_cast<uintptr_t*>(uiBase + 10) + *reinterpret_cast<uintptr_t*>(uiBase + 16));
 	*uiRealAddress = reinterpret_cast<uintptr_t>(detour);
 }
 
