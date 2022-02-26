@@ -13,7 +13,7 @@ add_custom_command(TARGET portal2util POST_BUILD
 )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -g -fPIC -Wall -Werror -O0")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-variable -Wno-unused-function")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-variable -Wno-unused-function -Wno-maybe-uninitialized")
 SET(CMAKE_SHARED_LINKER_FLAGS "-m32")
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

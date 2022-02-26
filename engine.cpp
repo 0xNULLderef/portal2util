@@ -20,6 +20,10 @@ bool Engine::Init() {
 		// DumpHex(temp, 0x40);
 		Interface::Delete(g_VEngineClient);
 	}
+	this->g_pServerPluginHandler = Interface::Create(this->Name(), "ISERVERPLUGINHELPERS001");
+	if(this->g_pServerPluginHandler) {
+		this->CreateMessage = g_pServerPluginHandler->Original<_CreateMessage>(0);
+	}
 	return this->GetPlayerNetworkIDString;
 }
 

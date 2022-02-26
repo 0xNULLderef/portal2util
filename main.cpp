@@ -30,7 +30,23 @@ CON_COMMAND(uncheat_cvar, "Forces cvar value") {
 	}
 }
 
+#define MAKE_3_BYTES_FROM_1_AND_2( x1, x2 ) (( (( uint16_t )x2) << 8 ) | (uint8_t)(x1))
+
 CON_COMMAND(pain, "aaaaaaaaaaaaaaaaa") {
+	KeyValues* pKv = new KeyValues("menu");
+	// unsigned char color[4] = { 255, 255, 0, 255 };
+	// pKv->SetColor("color", color);
+	pKv->SetString("title", "weed");
+	pKv->SetInt("level", 1);
+	pKv->SetInt("time", 10);
+	// char buf[4];
+	// for(int i = 0; i <= 10; i++) {
+		// snprintf(buf, sizeof(buf), "%d", i);
+		// KeyValues* ki = pKv->FindKey(buf, true);
+		// ki->SetString("command", "say test");
+		// ki->SetString("msg", buf);
+	// }
+	engine->CreateMessage(engine->g_pServerPluginHandler->ThisPtr(), server->GetPlayerEdict(0), DIALOG_MSG, pKv, &plugin);
 }
 
 bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory) {
